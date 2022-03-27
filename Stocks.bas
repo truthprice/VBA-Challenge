@@ -20,6 +20,7 @@ Sub Stocks()
     Dim Stock_Row As Integer
     Stock_Row = 2
     
+    Dim LastRow As Long
     LastRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
     'Create labels for each new column in the first row of each worksheet
     ws.Cells(1, 9).Value = "Ticker"
@@ -28,12 +29,12 @@ Sub Stocks()
     ws.Cells(1, 12).Value = "Total Stock Volume"
     
     For i = 2 To LastRow
-        'If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
-         '   Ticker = Cells(i, 1).Value
+        If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
+           Ticker = ws.Cells(i, 1).Value
           '  Total_Volume = Total_Volume + Cells(i, 7).Value
-           ' Range("I" & Stock_Row).Value = Ticker
+            ws.Range("I" & Stock_Row).Value = Ticker
             'Range("L" & Stock_Row).Value = Total_Volume
-            'Stock_Row = Stock_Row + 1
+            Stock_Row = Stock_Row + 1
             'Total_Volume = 0
             
         End If
