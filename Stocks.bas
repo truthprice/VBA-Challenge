@@ -7,7 +7,9 @@ Sub Stocks()
     
     'Set a variable for holding the yearly change
     Dim Yearly_Change As Double
-    Yearly_Change = 0
+    Dim year_open As Double
+    Dim year_close As Double
+    'Yearly_Change = 0
     
     'Set a variable for holding the percent change
     Dim Percent_Change As Double
@@ -30,13 +32,23 @@ Sub Stocks()
     
     For i = 2 To LastRow
         If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
-           Ticker = ws.Cells(i, 1).Value
+        
+            Ticker = ws.Cells(i, 1).Value
             Total_Volume = Total_Volume + Cells(i, 7).Value
+            year_close = ws.Cells(i, 6).Value
+            Yearly_Change = year_close - year_open
+            ws.Range("J" & Stock_Row).Value = Yearly_Change
             ws.Range("I" & Stock_Row).Value = Ticker
             ws.Range("L" & Stock_Row).Value = Total_Volume
             Stock_Row = Stock_Row + 1
             Total_Volume = 0
             
+        ElseIf Right(ws.Cells(i, 2).Value, 4) = "0102" Then
+        
+            year_open = ws.Cells(i, 3).Value
+            
+            
+        
         Else
             Total_Volume = Total_Volume + ws.Cells(i, 7).Value
             
