@@ -14,7 +14,7 @@ Sub Stocks()
     Percent_Change = Percent_Change * 100
     
     'Set a variable for holding the total stock volume
-    Dim Total_Volume As Long
+    Dim Total_Volume As Double
     Total_Volume = 0
     
     Dim Stock_Row As Integer
@@ -31,11 +31,14 @@ Sub Stocks()
     For i = 2 To LastRow
         If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
            Ticker = ws.Cells(i, 1).Value
-          '  Total_Volume = Total_Volume + Cells(i, 7).Value
+            Total_Volume = Total_Volume + Cells(i, 7).Value
             ws.Range("I" & Stock_Row).Value = Ticker
-            'Range("L" & Stock_Row).Value = Total_Volume
+            ws.Range("L" & Stock_Row).Value = Total_Volume
             Stock_Row = Stock_Row + 1
-            'Total_Volume = 0
+            Total_Volume = 0
+            
+        Else
+            Total_Volume = Total_Volume + ws.Cells(i, 7).Value
             
         End If
         
