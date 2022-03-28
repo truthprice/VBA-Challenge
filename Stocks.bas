@@ -53,17 +53,28 @@ Sub Stocks()
             Stock_Row = Stock_Row + 1
             Total_Volume = 0
             
-        'ElseIf Right(ws.Cells(i, 2).Value, 4) = "0102" Then
         
-            'year_open = ws.Cells(i, 3).Value
             
         Else
         
             Total_Volume = Total_Volume + ws.Cells(i, 7).Value
             
         End If
-        
                 
+    Next i
+    
+    For i = 2 To LastRow
+    
+        If ws.Cells(i, 10).Value > 0 Then
+            
+            ws.Cells(i, 10).Interior.ColorIndex = 4
+            
+        ElseIf ws.Cells(i, 10).Value < 0 Then
+        
+            ws.Cells(i, 10).Interior.ColorIndex = 3
+            
+        End If
+        
     Next i
     
     Next ws
