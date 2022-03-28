@@ -13,11 +13,10 @@ Sub Stocks()
     
     'Set a variable for holding the percent change
     Dim Percent_Change As Double
-    Percent_Change = Percent_Change * 100
+    Percent_Change = 0
     
     'Set a variable for holding the total stock volume
     Dim Total_Volume As Double
-    Total_Volume = 0
     
     Dim Stock_Row As Integer
     Stock_Row = 2
@@ -31,29 +30,40 @@ Sub Stocks()
     ws.Cells(1, 12).Value = "Total Stock Volume"
     
     For i = 2 To LastRow
-        If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
         
-            Ticker = ws.Cells(i, 1).Value
-            Total_Volume = Total_Volume + Cells(i, 7).Value
-            year_close = ws.Cells(i, 6).Value
-            Yearly_Change = year_close - year_open
-            ws.Range("J" & Stock_Row).Value = Yearly_Change
-            ws.Range("I" & Stock_Row).Value = Ticker
-            ws.Range("L" & Stock_Row).Value = Total_Volume
-            Stock_Row = Stock_Row + 1
-            Total_Volume = 0
-            
-        ElseIf Right(ws.Cells(i, 2).Value, 4) = "0102" Then
+        If Right(ws.Cells(i, 2).Value, 4) = "0102" Then
         
             year_open = ws.Cells(i, 3).Value
             
-            
+        End If
         
+        If ws.Cells(i, 1).Value <> ws.Cells(i + 1, 1).Value Then
+        
+            Ticker = ws.Cells(i, 1).Value
+            Total_Volume = Total_Volume + ws.Cells(i, 7).Value
+            ws.Range("L" & Stock_Row).Value = Total_Volume
+            year_close = ws.Cells(i, 6).Value
+            Yearly_Change = year_close - year_open
+            Percent_Change = Yearly_Change / year_open
+            ws.Range("J" & Stock_Row).Value = Yearly_Change
+            'ws.Range("J" & Stock_Row).Interior.ColorIndex = 4
+            ws.Range("K" & Stock_Row).Value = FormatPercent(Percent_Change)
+            ws.Range("I" & Stock_Row).Value = Ticker
+            
+            Stock_Row = Stock_Row + 1
+            Total_Volume = 0
+            
+        'ElseIf Right(ws.Cells(i, 2).Value, 4) = "0102" Then
+        
+            'year_open = ws.Cells(i, 3).Value
+            
         Else
+        
             Total_Volume = Total_Volume + ws.Cells(i, 7).Value
             
         End If
         
+                
     Next i
     
     Next ws
